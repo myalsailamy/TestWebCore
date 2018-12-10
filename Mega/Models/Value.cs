@@ -1,4 +1,4 @@
-namespace mega.Models
+namespace Mega.Models
 {
     public class Value
     {

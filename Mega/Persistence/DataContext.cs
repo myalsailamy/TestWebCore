@@ -1,13 +1,14 @@
 using JetBrains.Annotations;
-using mega.Models;
+using Mega.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace mega.Persistence
+namespace Mega.Persistence
 {
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         public DbSet<Value> Values { get; set; }
+        public DbSet<User> Users { get; set; }
 
     }
 }

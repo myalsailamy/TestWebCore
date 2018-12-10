@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using mega.Persistence;
+using Mega.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace maga.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    [ApiController]
+    public class ValuesController : ControllerBase
     {
         private readonly DataContext context;
 
