@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Mega/maga.csproj"
+                "${workspaceFolder}/ZwajApp.API/maga.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
