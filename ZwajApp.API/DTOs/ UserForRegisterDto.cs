@@ -6,7 +6,8 @@ namespace ZwajApp.API.DTOs
     {
         [Required]
         public string Username { get; set; }
-        [StringLength(8,MinimumLength = 4 , ErrorMessage = "Your password should Length between 4-8 characters.")]
+        [Required]
+        [StringLength(8, MinimumLength = 4, ErrorMessage = "Your password should Length between 4-8 characters.")]
         public string Password { get; set; }
     }
 }

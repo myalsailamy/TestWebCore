@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap-v4-rtl/dist/css/bootstrap-rtl.css";
 @import "~font-awesome/css/font-awesome.min.css";
+@import "~alertifyjs/build/css/alertify.rtl.min.css";
+@import "~alertifyjs/build/css/themes/bootstrap.rtl.min.css";
 
 /*Fonts*/
 /* @import url("http://fonts.googleapis.com/earlyaccess/droidarabickufi.css"); */

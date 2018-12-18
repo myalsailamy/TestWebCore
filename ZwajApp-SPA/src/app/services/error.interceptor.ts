@@ -18,7 +18,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                         return throwError(applicationError);
                     }
                     // Model State Errors
-                    const serverError = error;
+                    const serverError = error.error;
                     let modelStateErrors = '';
                     if (serverError && typeof serverError === 'object') {
                         for (const key in serverError) {
@@ -27,6 +27,10 @@ export class ErrorInterceptor implements HttpInterceptor {
                             }
                         }
                     }
+                    // unauthorized Errors
+                    if (error.status === 401)
+                        return throwError(error.statusText);
+
                     return throwError(modelStateErrors || serverError || 'server Error');
                 }
             })
