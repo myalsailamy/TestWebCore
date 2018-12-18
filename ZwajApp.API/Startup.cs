@@ -13,6 +13,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Net;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Diagnostics;
+using ZwajApp.API.Helpers;
 
 namespace ZwajApp.API
 {
@@ -38,7 +42,7 @@ namespace ZwajApp.API
                 Options.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)) ,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
@@ -52,6 +56,27 @@ namespace ZwajApp.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler(
+                                options =>
+                                {
+                                    options.Run(
+                                        async context =>
+                                        {
+                                            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                                            var ex = context.Features.Get<IExceptionHandlerFeature>();
+                                            if (ex != null)
+                                            {
+                                            // var err = $"<h1>Error: {ex.Error.Message}</h1>{ex.Error.StackTrace}";
+                                            // await context.Response.WriteAsync(err).ConfigureAwait(false);
+                                            context.Response.AddApplicationError(ex.Error.Message);
+                                                await context.Response.WriteAsync(ex.Error.Message).ConfigureAwait(false);
+                                            }
+                                        });
+                                });
+
             }
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();
