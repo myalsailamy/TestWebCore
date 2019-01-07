@@ -1,4 +1,5 @@
 
+using System;
 using Microsoft.AspNetCore.Http;
 
 namespace ZwajApp.API.Helpers
@@ -15,6 +16,12 @@ namespace ZwajApp.API.Helpers
             response.Headers.Add("access-control-expose-headers", "Application-Error");
             response.Headers.Add("access-control-allow-origin", "*");
             // response.Headers.Add("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH");
+        }
+        public static int CalculateAge(this DateTime datetime)
+        {
+            var age = DateTime.Today.Year - datetime.Year;
+            if (datetime.AddYears(age) > DateTime.Today) age--;
+            return age;
         }
     }
 }

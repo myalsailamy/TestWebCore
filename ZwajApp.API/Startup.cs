@@ -17,6 +17,7 @@ using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Diagnostics;
 using ZwajApp.API.Helpers;
+using AutoMapper;
 
 namespace ZwajApp.API
 {
@@ -33,9 +34,16 @@ namespace ZwajApp.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(option =>
+            {
+                option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
+
             services.AddCors();
+            services.AddAutoMapper();
+            services.AddTransient<TrialData>();
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IZwajRepository, ZwajRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(Options =>
             {
@@ -51,7 +59,7 @@ namespace ZwajApp.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, TrialData trialData)
         {
             if (env.IsDevelopment())
             {
@@ -69,15 +77,16 @@ namespace ZwajApp.API
                                             var ex = context.Features.Get<IExceptionHandlerFeature>();
                                             if (ex != null)
                                             {
-                                            // var err = $"<h1>Error: {ex.Error.Message}</h1>{ex.Error.StackTrace}";
-                                            // await context.Response.WriteAsync(err).ConfigureAwait(false);
-                                            context.Response.AddApplicationError(ex.Error.Message);
+                                                // var err = $"<h1>Error: {ex.Error.Message}</h1>{ex.Error.StackTrace}";
+                                                // await context.Response.WriteAsync(err).ConfigureAwait(false);
+                                                context.Response.AddApplicationError(ex.Error.Message);
                                                 await context.Response.WriteAsync(ex.Error.Message).ConfigureAwait(false);
                                             }
                                         });
                                 });
 
             }
+            // trialData.TrialUsers();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();
             app.UseMvc();
