@@ -1,3 +1,4 @@
+import { PreventUnsavedChangesGuard } from './guards/prevent-unsaved-changes.guard';
 import { appRoutes } from './components/routes';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,6 +16,7 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { MemberDetailResolver } from './resolvers/member-detail.resolver';
 import { MemberListResolver } from './resolvers/member-list.resolver';
+import { MemberEditResolver } from './resolvers/member-edit.resolver';
 
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -25,6 +27,7 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { ListsComponent } from './components/lists/lists.component';
 import { MemberCardComponent } from './components/members/member-card/member-card.component';
 import { MemberDetailComponent } from './components/members/member-detail/member-detail.component';
+import { MemberEditComponent } from './components/members/member-edit/member-edit.component';
 
 
 
@@ -42,7 +45,8 @@ export function tokenGetter() {
       MessagesComponent,
       MemberListComponent,
       MemberCardComponent,
-      MemberDetailComponent
+      MemberDetailComponent,
+      MemberEditComponent
    ],
    imports: [
       BrowserModule,
@@ -65,9 +69,11 @@ export function tokenGetter() {
       AuthService,
       AlertifyService,
       AuthGuard,
+      PreventUnsavedChangesGuard,
       UserService,
       MemberDetailResolver,
-      MemberListResolver
+      MemberListResolver,
+      MemberEditResolver
    ],
    bootstrap: [
       AppComponent
