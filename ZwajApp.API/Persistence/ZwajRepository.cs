@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ZwajApp.API.Models;
@@ -38,9 +39,18 @@ namespace ZwajApp.API.Persistence
 
         public async Task<bool> SaveAll()
         {
-            return await this.Context.SaveChangesAsync() > 0 ;
+            return await this.Context.SaveChangesAsync() > 0;
         }
 
-        
+        public async Task<Photo> GetPhoto(int id)
+        {
+            var photo = await Context.Photos.FirstOrDefaultAsync(p => p.Id == id);
+            return photo;
+        }
+
+        public async Task<Photo> GetMainPhotoForUser(int UserId)
+        {
+            return await Context.Photos.Where(p => p.UserId == UserId).FirstOrDefaultAsync(p => p.IsMain);
+        }
     }
-} 
+}

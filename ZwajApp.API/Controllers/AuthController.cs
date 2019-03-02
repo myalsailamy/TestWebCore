@@ -9,21 +9,24 @@ using ZwajApp.API.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using AutoMapper;
 
 namespace ZwajApp.API.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository repo;
         private readonly IConfiguration config;
+        private readonly IMapper _mapper;
 
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
             this.repo = repo;
             this.config = config;
+            this._mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -60,7 +63,12 @@ namespace ZwajApp.API.Controllers
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return Ok(new { token = tokenHandler.WriteToken(token) });
+            var userWithDetails = _mapper.Map<UserForListDto>(user);
+            return Ok(new
+            {
+                token = tokenHandler.WriteToken(token),
+                userWithDetails
+            });
         }
 
     }

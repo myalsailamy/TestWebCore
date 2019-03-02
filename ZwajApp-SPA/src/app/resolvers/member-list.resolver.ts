@@ -11,7 +11,7 @@ export class MemberListResolver implements Resolve<User[]>{
     constructor(private userService: UserService, private router: Router, private alertiy: AlertifyService) { }
     resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
         return this.userService.getUsers().pipe(
-            catchError(error=>{
+            catchError(error => {
                 this.alertiy.error('يوجد مشكلة في عرض البيانات');
                 this.router.navigate(['']);
                 return of(null);

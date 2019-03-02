@@ -32,7 +32,7 @@
         </div>
         <div class="card-footer">
           <div class="btn-group d-flex">
-            <button class="btn btn-success btn-block" form="editForm" [disabled]="!editForm.dirty" >حفظ التعديلات</button>
+            <button class="btn btn-success btn-block" form="editForm" [disabled]="!editForm.dirty">حفظ التعديلات</button>
           </div>
         </div>
       </div>
@@ -41,53 +41,53 @@
       <div class="tab-Panel">
         <tabset class="member-tabset">
           <tab heading="بياناتي">
-            <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()" >
-            <div class="card">
-              <div class="card-header">
-                <h4>أعرفك بنفسي</h4>
-              </div>
-              <div class="card-text mt-3 p-2">
-                <textarea name="introduction" [(ngModel)]="user.introduction" rows="3" class="form-control border-white"></textarea>
-              </div>
-            </div>
-
-            <div class="card mt-4">
-              <div class="card-header">
-                <h4>أبحث عن</h4>
-              </div>
-              <div class="card-text mt-3 p-2">
-                <textarea name="lookingFor" [(ngModel)]="user.lookingFor" rows="3" class="form-control border-white"></textarea>
-              </div>
-            </div>
-
-            <div class="card mt-4">
-              <div class="card-header">
-                <h4>هواياتي</h4>
-              </div>
-              <div class="card-text mt-3 p-2">
-                <textarea name="interests" [(ngModel)]="user.interests" rows="3" class="form-control border-white"></textarea>
-              </div>
-            </div>
-
-            <div class="card mt-4">
-              <div class="card-header">
-                <h4>مكان الاقامة</h4>
-              </div>
-              <div class="card-text mt-3 p-2">
-                <div class="form-inline">
-                  <label for="country"  class="mr-2">البلد</label>
-                  <input type="text" name="country" [(ngModel)]="user.country" class="form-control ml-2 mr-2">
-                  <label for="city" class="ml-4">المدينة</label>
-                  <input type="text" name="city" [(ngModel)]="user.city" class="form-control ml-2 mr-2">
+            <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()">
+              <div class="card">
+                <div class="card-header">
+                  <h4>أعرفك بنفسي</h4>
+                </div>
+                <div class="card-text mt-3 p-2">
+                  <textarea name="introduction" [(ngModel)]="user.introduction" rows="3" class="form-control border-white"></textarea>
                 </div>
               </div>
-            </div>
-          </form>
+
+              <div class="card mt-4">
+                <div class="card-header">
+                  <h4>أبحث عن</h4>
+                </div>
+                <div class="card-text mt-3 p-2">
+                  <textarea name="lookingFor" [(ngModel)]="user.lookingFor" rows="3" class="form-control border-white"></textarea>
+                </div>
+              </div>
+
+              <div class="card mt-4">
+                <div class="card-header">
+                  <h4>هواياتي</h4>
+                </div>
+                <div class="card-text mt-3 p-2">
+                  <textarea name="interests" [(ngModel)]="user.interests" rows="3" class="form-control border-white"></textarea>
+                </div>
+              </div>
+
+              <div class="card mt-4">
+                <div class="card-header">
+                  <h4>مكان الاقامة</h4>
+                </div>
+                <div class="card-text mt-3 p-2">
+                  <div class="form-inline">
+                    <label for="country" class="mr-2">البلد</label>
+                    <input type="text" name="country" [(ngModel)]="user.country" class="form-control ml-2 mr-2">
+                    <label for="city" class="ml-4">المدينة</label>
+                    <input type="text" name="city" [(ngModel)]="user.city" class="form-control ml-2 mr-2">
+                  </div>
+                </div>
+              </div>
+            </form>
 
           </tab>
 
           <tab heading="صوري">
-
+            <app-photo-editor (getMemberPhotoChange)='updateMainPhoto($event)' [photos]='user.photos'></app-photo-editor>
             <!-- <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery> -->
           </tab>
 

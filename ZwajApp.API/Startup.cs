@@ -40,6 +40,7 @@ namespace ZwajApp.API
             });
 
             services.AddCors();
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddAutoMapper();
             services.AddTransient<TrialData>();
             services.AddScoped<IAuthRepository, AuthRepository>();
@@ -87,7 +88,7 @@ namespace ZwajApp.API
 
             }
             // trialData.TrialUsers();
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();
             app.UseMvc();
         }

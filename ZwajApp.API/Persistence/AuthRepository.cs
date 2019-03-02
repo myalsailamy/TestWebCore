@@ -17,7 +17,7 @@ namespace ZwajApp.API.Persistence
 
         public async Task<User> Login(string userName, string password)
         {
-            var user = await context.Users.FirstOrDefaultAsync(targetUser => targetUser.UserName == userName);
+            var user = await context.Users.Include(p => p.Photos).FirstOrDefaultAsync(targetUser => targetUser.UserName == userName);
             if (user == null)
                 return null;
             if (!VerifyPasswordHash(password, user.PasswordSalt, user.PasswordHash))

@@ -1,10 +1,11 @@
-import { AuthService } from './../../../services/auth.service';
+
 import { UserService } from 'src/app/services/User.service';
-import { AlertifyService } from './../../../services/Alertify.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { NgForm } from '@angular/forms';
+import { AlertifyService } from 'src/app/services/Alertify.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-member-edit',
@@ -39,4 +40,7 @@ export class MemberEditComponent implements OnInit {
     console.log('Error');
   }
 
+  updateMainPhoto(photoUrl: string) {
+    this.user.photoURL = photoUrl;
+  }
 }

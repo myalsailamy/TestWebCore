@@ -9,6 +9,7 @@ import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { ErrorInterceptorProvider } from './services/error.interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxGalleryModule } from 'ngx-gallery';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { UserService } from './services/User.service';
 import { AlertifyService } from './services/Alertify.service';
@@ -28,6 +29,8 @@ import { ListsComponent } from './components/lists/lists.component';
 import { MemberCardComponent } from './components/members/member-card/member-card.component';
 import { MemberDetailComponent } from './components/members/member-detail/member-detail.component';
 import { MemberEditComponent } from './components/members/member-edit/member-edit.component';
+import { PhotoEditorComponent } from './components/members/photo-editor/photo-editor.component';
+
 
 
 
@@ -46,12 +49,14 @@ export function tokenGetter() {
       MemberListComponent,
       MemberCardComponent,
       MemberDetailComponent,
-      MemberEditComponent
+      MemberEditComponent,
+      PhotoEditorComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
+      FileUploadModule,
       NgxGalleryModule,
       BsDropdownModule.forRoot(),
       RouterModule.forRoot(appRoutes),
