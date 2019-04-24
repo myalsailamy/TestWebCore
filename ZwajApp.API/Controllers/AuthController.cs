@@ -26,7 +26,7 @@ namespace ZwajApp.API.Controllers
         {
             this.repo = repo;
             this.config = config;
-            this._mapper = mapper;
+           _mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -47,11 +47,11 @@ namespace ZwajApp.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> login(UserForLoginDto userForLogin)
         {
-            var user = await repo.Login(userForLogin.UserName.ToLower(), userForLogin.Password);
-            if (user == null) { return Unauthorized(); }
+            var userFromRepo = await repo.Login(userForLogin.UserName.ToLower(), userForLogin.Password);
+            if (userFromRepo == null) { return Unauthorized(); }
             var claims = new[] {
-                new Claim(ClaimTypes.NameIdentifier , user.Id.ToString()),
-                new Claim(ClaimTypes.Name , user.UserName)
+                new Claim(ClaimTypes.NameIdentifier , userFromRepo.Id.ToString()),
+                new Claim(ClaimTypes.Name , userFromRepo.UserName)
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.GetSection("AppSettings:Token").Value));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
@@ -63,11 +63,11 @@ namespace ZwajApp.API.Controllers
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            var userWithDetails = _mapper.Map<UserForListDto>(user);
+            var user = _mapper.Map<UserForListDto>(userFromRepo);
             return Ok(new
             {
                 token = tokenHandler.WriteToken(token),
-                userWithDetails
+                user
             });
         }
 

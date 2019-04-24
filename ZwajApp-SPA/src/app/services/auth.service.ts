@@ -1,10 +1,11 @@
+import { Photo } from './../models/Photo';
 import { User } from './../models/User';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
-import { User } from '../models/User';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,12 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
   decodedToken: any;
   currentUser: User;
+  photoUrl = new BehaviorSubject<string>('../../assets/Images/User.png');
+  currentPhotoUrl = this.photoUrl.asObservable();
   constructor(private http: HttpClient) { }
-
+  changeMemberPhoto(newPhotoUrl: string) {
+    this.photoUrl.next(newPhotoUrl);
+  }
   login(model: any) {
     return this.http.post(this.baseUrl + 'login', model).pipe(
       map((response: any) => {
@@ -25,6 +30,7 @@ export class AuthService {
           localStorage.setItem('user', JSON.stringify(user.user));
           this.decodedToken = this.jwtHelper.decodeToken(user.token);
           this.currentUser = user.user;
+          this.changeMemberPhoto(this.currentUser.photoURL);
         }
       }));
   }

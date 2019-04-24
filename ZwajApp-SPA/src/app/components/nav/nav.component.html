@@ -20,6 +20,7 @@
   </ul>
 
   <div dropdown *ngIf="loggedIn()" class="dropdown">
+
     <a dropdownToggle class="dropdown-toggle text-light nav-menu-font nav-link">
       مرحبا بك
       {{authService.decodedToken?.unique_name | titlecase}}
@@ -31,7 +32,9 @@
       <a class="dropdown-item mnav-link" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> خروج</a>
     </div>
   </div>
-
+  <span>
+      <img src="{{authService.currentUser.photoURL}}" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
+    </span>
   <form *ngIf="! loggedIn()" #LoginForm="ngForm" (ngSubmit)="login()" class="ml-5 form-inline my-2 my-lg-0">
     <input name="username" required class="form-control mr-sm-2" type="text" [(ngModel)]="model.username" placeholder="إسم المشترك">
     <input name="password" required class="form-control mr-sm-2" type="password" [(ngModel)]="model.password"

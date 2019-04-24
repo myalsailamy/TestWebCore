@@ -39,6 +39,9 @@ namespace ZwajApp.API
                 option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
 
+
+
+
             services.AddCors();
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddAutoMapper();
@@ -62,6 +65,7 @@ namespace ZwajApp.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, TrialData trialData)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
